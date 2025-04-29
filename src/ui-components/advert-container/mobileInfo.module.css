@@ -1,0 +1,69 @@
+.fullInfo {
+  margin-top: 15%;;
+  background: #a0a0a0;
+  width: 100%;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadeIn 0.8s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { 
+    opacity: 0;
+    transform: translateY(0px); 
+  }
+  to { 
+    opacity: 1;
+    transform:  translateY(20px); 
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(0px);
+    display: none;
+  }
+}
+
+.titleFullInfo {
+  font-size: 29px;
+  font-weight: 900;
+  width: 100%;
+  text-align: left;
+}
+
+.whatIs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px 0;
+  width: 80%;
+}
+
+.whatIfInfo {
+  text-align: start;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.list {
+  text-align: left;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  list-style-position: inside;
+}
+
+.listItem {
+  box-sizing: border-box;
+}

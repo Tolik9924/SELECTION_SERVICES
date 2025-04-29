@@ -1,0 +1,106 @@
+.consultContainer {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: #a0a0a0;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: #000;
+  opacity: 20%;
+  z-index: 2;
+}
+
+.image {
+  z-index: 1;
+  float: right;
+  margin-right: 2%;
+}
+
+.infoContainer {
+  z-index: 2;
+  position: absolute;
+  color: #fff;
+  text-align: left;
+  width: 100%;
+  top: 10%;
+  left: 3%;
+}
+
+.title {
+  width: 40%;
+  margin-top: 30px;
+  font-size: 3rem;
+  font-weight: 900;
+}
+
+.explain {
+  width: 40%;
+  font-size: 1.5rem;
+}
+
+.importantInfo {
+  font-weight: 900;
+}
+
+.mobilePhone {
+  width: 100%;
+  font-size: 1.7rem;
+}
+
+.number {
+  margin-left: 20px;
+}
+
+@media (max-width: 1024px) {
+  .consultContainer {
+    height: 956px;
+  }
+
+  .image {
+    width: 100%;
+    height: 956px;
+    object-fit: cover;
+    float: none;
+  }
+
+  .overlay {
+    height: 956px;
+  }
+
+  .freeInfo {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .infoContainer {
+    top: 0;
+    left: 0;
+  }
+
+  .title {
+    margin-top: 300px;
+    width: 96%;
+    font-size: 36px;
+    display: flex;
+    align-self: center;
+  }
+
+  .explain {
+    width: 90%;
+    margin-left: 3%;
+    margin-top: 15%;
+  }
+
+  .mobilePhone {
+    font-size: 20px;
+    margin-left: 3%;
+    margin-top: 15%;
+  }
+}

@@ -11,6 +11,7 @@ type Price = {
 };
 
 export const ServiceType = ({
+  id,
   img,
   title,
   prices,
@@ -18,6 +19,7 @@ export const ServiceType = ({
   happenList,
   getList,
 }: {
+  id: string;
   img: string;
   title: string;
   prices: Price[];
@@ -32,7 +34,7 @@ export const ServiceType = ({
   };
 
   return (
-    <div className={styles.advertContainer}>
+    <div id={id} className={styles.advertContainer}>
       <div className={styles.fullExplanation}>
         <div className={styles.explanations}>
           <div className={styles.explanationContainer}>

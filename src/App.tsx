@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import { ServiceType } from "./ui-components/advert-container/ServiceType";
 import img5 from "./assets/5_img.png";
 import img6 from "./assets/6_img.png";
@@ -45,54 +46,90 @@ import { Practic } from "./ui-components/practic/Practic";
 import { Modeton } from "./ui-components/modeton/Modeton";
 import { ServiceGive } from "./ui-components/service-give/ServiceGive";
 import { Consult } from "./ui-components/consult/Consult";
+import { Navbar } from "./ui-components/navbar/Navbar";
 
 function App() {
+  const sectionRef = useRef(null);
+  const [showNavbar, setShowNavbar] = useState(false);
+  const [firstShowing, setFirstShowing] = useState(true);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setShowNavbar(entry.isIntersecting);
+        if (entry.isIntersecting) {
+          setFirstShowing(false);
+        }
+      },
+      {
+        threshold: 0.1, // Show navbar if at least 10% of section is visible
+      }
+    );
+
+    const sectionEl = sectionRef.current;
+    if (sectionEl) {
+      observer.observe(sectionEl);
+    }
+
+    return () => {
+      if (sectionEl) observer.unobserve(sectionEl);
+    };
+  }, []);
+
   return (
     <div className={styles.App}>
+      {!firstShowing && <Navbar isShow={showNavbar} />}
       <SelectionService />
       <Practic />
       <Modeton />
       <ServiceGive />
-      <ServiceType
-        img={img5}
-        title={WARDROBE_TITLE}
-        prices={WARDROBE_BREAKDOWN_PRICES}
-        whatIs={WHAT_IS_WARDROBE_BREAKDOWN}
-        happenList={WARDROBE_HAPPEN_LIST}
-        getList={WARDROBE_GET_LIST}
-      />
-      <ServiceType
-        img={img6}
-        title={BEAUTY_TITLE}
-        prices={BEAUTY_LINE_PRICES}
-        whatIs={WHAT_IS_BEAUTY_LINE}
-        happenList={BEAUTY_LINE_HAPPEN_LIST}
-        getList={WARDROBE_GET_LIST}
-      />
-      <ServiceType
-        img={img7}
-        title={SHOPPING_TITLE}
-        prices={SHOPPING_LINE_PRICES}
-        whatIs={WHAT_IS_SHOPPING}
-        happenList={SHOPPING_HAPPEN_LIST}
-        getList={SHOPPING_GET_LIST}
-      />
-      <ServiceType
-        img={img8}
-        title={CAPSULE_WARDROBE_TITLE}
-        prices={CAPSULE_WARDROBE_PRICES}
-        whatIs={WHAT_IS_CAPSULE_WARDROBE}
-        happenList={CAPSULE_WARDROBE_HAPPEN_LIST}
-        getList={CAPSULE_WARDROBE_GET_LIST}
-      />
-      <ServiceType
-        img={img9}
-        title={KEY_WARDROBE_TITLE}
-        prices={KEY_WARDROBE_PRICES}
-        whatIs={WHAT_IS_KEY_WARDROBE}
-        happenList={KEY_WARDROBE_HAPPEN_LIST}
-        getList={KEY_WARDROBE_GET_LIST}
-      />
+      <div className={styles.targetSection} ref={sectionRef}>
+        <ServiceType
+          id="WARDROBE"
+          img={img5}
+          title={WARDROBE_TITLE}
+          prices={WARDROBE_BREAKDOWN_PRICES}
+          whatIs={WHAT_IS_WARDROBE_BREAKDOWN}
+          happenList={WARDROBE_HAPPEN_LIST}
+          getList={WARDROBE_GET_LIST}
+        />
+        <ServiceType
+          id="LINES"
+          img={img6}
+          title={BEAUTY_TITLE}
+          prices={BEAUTY_LINE_PRICES}
+          whatIs={WHAT_IS_BEAUTY_LINE}
+          happenList={BEAUTY_LINE_HAPPEN_LIST}
+          getList={WARDROBE_GET_LIST}
+        />
+        <ServiceType
+          id="SHOPPING"
+          img={img7}
+          title={SHOPPING_TITLE}
+          prices={SHOPPING_LINE_PRICES}
+          whatIs={WHAT_IS_SHOPPING}
+          happenList={SHOPPING_HAPPEN_LIST}
+          getList={SHOPPING_GET_LIST}
+        />
+        <ServiceType
+          id="CAPSULE_WARDROBE"
+          img={img8}
+          title={CAPSULE_WARDROBE_TITLE}
+          prices={CAPSULE_WARDROBE_PRICES}
+          whatIs={WHAT_IS_CAPSULE_WARDROBE}
+          happenList={CAPSULE_WARDROBE_HAPPEN_LIST}
+          getList={CAPSULE_WARDROBE_GET_LIST}
+        />
+        <ServiceType
+          id="KEY_WARDROBE"
+          img={img9}
+          title={KEY_WARDROBE_TITLE}
+          prices={KEY_WARDROBE_PRICES}
+          whatIs={WHAT_IS_KEY_WARDROBE}
+          happenList={KEY_WARDROBE_HAPPEN_LIST}
+          getList={KEY_WARDROBE_GET_LIST}
+        />
+      </div>
       <Consult />
     </div>
   );

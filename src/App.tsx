@@ -48,10 +48,20 @@ import { ServiceGive } from "./ui-components/service-give/ServiceGive";
 import { Consult } from "./ui-components/consult/Consult";
 import { Navbar } from "./ui-components/navbar/Navbar";
 
+const SECTIONS = [
+  "WARDROBE",
+  "LINES",
+  "SHOPPING",
+  "CAPSULE_WARDROBE",
+  "KEY_WARDROBE",
+];
+
 function App() {
   const sectionRef = useRef(null);
   const [showNavbar, setShowNavbar] = useState(false);
   const [firstShowing, setFirstShowing] = useState(true);
+  const [activeSection, setActiveSection] = useState("");
+  const sectionRefs = useRef<{ [key: string]: HTMLElement | null }>({});
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -76,9 +86,30 @@ function App() {
     };
   }, []);
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { threshold: 1 }
+    );
+
+    SECTIONS.forEach((id: string) => {
+      if (sectionRefs.current[id]) {
+        observer.observe(sectionRefs.current[id]);
+      }
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className={styles.App}>
-      {!firstShowing && <Navbar isShow={showNavbar} />}
+      {!firstShowing && <Navbar isShow={showNavbar} activeId={activeSection} />}
       <SelectionService />
       <Practic />
       <Modeton />
@@ -92,6 +123,9 @@ function App() {
           whatIs={WHAT_IS_WARDROBE_BREAKDOWN}
           happenList={WARDROBE_HAPPEN_LIST}
           getList={WARDROBE_GET_LIST}
+          ref={(el) => {
+            sectionRefs.current["WARDROBE"] = el;
+          }}
         />
         <ServiceType
           id="LINES"
@@ -101,6 +135,9 @@ function App() {
           whatIs={WHAT_IS_BEAUTY_LINE}
           happenList={BEAUTY_LINE_HAPPEN_LIST}
           getList={WARDROBE_GET_LIST}
+          ref={(el) => {
+            sectionRefs.current["LINES"] = el;
+          }}
         />
         <ServiceType
           id="SHOPPING"
@@ -110,6 +147,9 @@ function App() {
           whatIs={WHAT_IS_SHOPPING}
           happenList={SHOPPING_HAPPEN_LIST}
           getList={SHOPPING_GET_LIST}
+          ref={(el) => {
+            sectionRefs.current["SHOPPING"] = el;
+          }}
         />
         <ServiceType
           id="CAPSULE_WARDROBE"
@@ -119,6 +159,9 @@ function App() {
           whatIs={WHAT_IS_CAPSULE_WARDROBE}
           happenList={CAPSULE_WARDROBE_HAPPEN_LIST}
           getList={CAPSULE_WARDROBE_GET_LIST}
+          ref={(el) => {
+            sectionRefs.current["CAPSULE_WARDROBE"] = el;
+          }}
         />
         <ServiceType
           id="KEY_WARDROBE"
@@ -128,6 +171,9 @@ function App() {
           whatIs={WHAT_IS_KEY_WARDROBE}
           happenList={KEY_WARDROBE_HAPPEN_LIST}
           getList={KEY_WARDROBE_GET_LIST}
+          ref={(el) => {
+            sectionRefs.current["KEY_WARDROBE"] = el;
+          }}
         />
       </div>
       <Consult />

@@ -1,23 +1,76 @@
+import { useEffect, useState } from "react";
 import styles from "./navbar.module.css";
 
-export const Navbar = ({ isShow }: { isShow: boolean }) => {
+const NAVBAR_ITEMS = [
+  {
+    id: "WARDROBE",
+    href: "#WARDROBE",
+    title: "РОЗБІР ГАРДЕРОБА",
+    active: false,
+  },
+  {
+    id: "LINES",
+    href: "#LINES",
+    title: "РОЗБІР ЛІНІЙ ЗОВНІШНОСТІ",
+    active: false,
+  },
+  {
+    id: "SHOPPING",
+    href: "#SHOPPING",
+    title: "ШОПІНГ СУПРОВІД",
+    active: false,
+  },
+  {
+    id: "CAPSULE_WARDROBE",
+    href: "#CAPSULE_WARDROBE",
+    title: "КАПСУЛЬНИЙ ГАРДЕРОБ",
+    active: false,
+  },
+  {
+    id: "KEY_WARDROBE",
+    href: "#KEY_WARDROBE",
+    title: "ГАРДЕРОБ ПІД КЛЮЧ",
+    active: false,
+  },
+];
+
+export const Navbar = ({
+  isShow,
+  activeId,
+}: {
+  isShow: boolean;
+  activeId: string;
+}) => {
+  const [navbarItems, setNavbarItems] = useState(NAVBAR_ITEMS);
+
+  useEffect(() => {
+    handleActiveItemMenu(activeId);
+  }, [activeId]);
+
+  const handleActiveItemMenu = (id: string) => {
+    const result = navbarItems.map((item) => {
+      if (item.id === id) {
+        return { ...item, active: true };
+      } else {
+        return { ...item, active: false };
+      }
+    });
+
+    setNavbarItems(result);
+  };
+
   return (
     <nav className={isShow ? styles.navbar : styles.hide}>
-      <a href="#WARDROBE" className={styles.link}>
-        WARDROBE
-      </a>
-      <a href="#LINES" className={styles.link}>
-        BEAUTY LINES
-      </a>
-      <a href="#SHOPPING" className={styles.link}>
-        SHOPPING
-      </a>
-      <a href="#CAPSULE_WARDROBE" className={styles.link}>
-        CAPSULE WARDROBE
-      </a>
-      <a href="#KEY_WARDROBE" className={styles.link}>
-        KEY WARDROBE
-      </a>
+      {navbarItems.map((item) => (
+        <a
+          key={item.id}
+          href={item.href}
+          className={!item.active ? styles.link : styles.linkActive}
+          onClick={() => handleActiveItemMenu(item.id)}
+        >
+          {item.title}
+        </a>
+      ))}
     </nav>
   );
 };

@@ -18,6 +18,7 @@ export const ServiceType = ({
   whatIs,
   happenList,
   getList,
+  ref,
 }: {
   id: string;
   img: string;
@@ -26,6 +27,7 @@ export const ServiceType = ({
   whatIs: string[];
   happenList: string[];
   getList: string[];
+  ref: React.Ref<HTMLDivElement>;
 }) => {
   const [showInfo, setShow] = useState(false);
 
@@ -34,7 +36,7 @@ export const ServiceType = ({
   };
 
   return (
-    <div id={id} className={styles.advertContainer}>
+    <div id={id} className={styles.advertContainer} ref={ref}>
       <div className={styles.fullExplanation}>
         <div className={styles.explanations}>
           <div className={styles.explanationContainer}>

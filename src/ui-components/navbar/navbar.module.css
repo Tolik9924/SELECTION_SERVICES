@@ -1,10 +1,12 @@
 .navbar {
   position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   width: 100%;
   height: 60px;
   background: #d9d9d9;
-  color: white;
+  color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -18,7 +20,7 @@
   width: 100%;
   height: 60px;
   background: #d9d9d9;
-  color: white;
+  color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -56,6 +58,51 @@
   align-items: center;
   padding: 10px;
   box-sizing: border-box;
+  font-size: 16px;
   font-weight: 700;
-  /* background: #000; */
+  transition: all 0.3s ease-in-out;
+  border-top: 5px solid #d9d9d9;
+  border-bottom: 5px solid #d9d9d9;
+}
+
+.linkActive {
+  text-decoration: none;
+  color: #fff;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  box-sizing: border-box;
+  font-weight: 700;
+  font-size: 16px;
+  transition: all 0.3s ease-in-out;
+  border-top: 5px solid #d9d9d9;
+  border-bottom: 5px solid #fff;
+}
+
+.link:hover {
+  background: #e3e3e3;
+  border-top: 5px solid #e3e3e3;
+  border-bottom: 5px solid #e3e3e3;
+}
+
+
+@media (max-width: 911px) {
+  .navbar {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    justify-content: start;
+    scrollbar-color:  transparent transparent;
+    scrollbar-width: none;
+  }
+
+  .link {
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+
+  .linkActive {
+    font-size: 12px;
+    flex-shrink: 0;
+  }
 }

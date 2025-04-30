@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import styles from "./navbar.module.css";
 
 const NAVBAR_ITEMS = [
@@ -42,12 +42,16 @@ export const Navbar = ({
   activeId: string;
 }) => {
   const [navbarItems, setNavbarItems] = useState(NAVBAR_ITEMS);
+  const [click, setClick] = useState(false);
 
   useEffect(() => {
-    handleActiveItemMenu(activeId);
+    if (!click) {
+      handleActiveItemMenu(activeId);
+    }
   }, [activeId]);
 
   const handleActiveItemMenu = (id: string) => {
+    console.log("ID: ", id);
     const result = navbarItems.map((item) => {
       if (item.id === id) {
         return { ...item, active: true };
@@ -66,7 +70,13 @@ export const Navbar = ({
           key={item.id}
           href={item.href}
           className={!item.active ? styles.link : styles.linkActive}
-          onClick={() => handleActiveItemMenu(item.id)}
+          onClick={() => {
+            setClick(true);
+            handleActiveItemMenu(item.id);
+            setTimeout(() => {
+              setClick(false);
+            }, 3000);
+          }}
         >
           {item.title}
         </a>

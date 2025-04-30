@@ -107,6 +107,8 @@ function App() {
     return () => observer.disconnect();
   }, []);
 
+  console.log("ACTIVE ID APP: ", activeSection);
+
   return (
     <div className={styles.App}>
       {!firstShowing && <Navbar isShow={showNavbar} activeId={activeSection} />}

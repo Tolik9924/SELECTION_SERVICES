@@ -47,6 +47,7 @@ import { Modeton } from "./ui-components/modeton/Modeton";
 import { ServiceGive } from "./ui-components/service-give/ServiceGive";
 import { Consult } from "./ui-components/consult/Consult";
 import { Navbar } from "./ui-components/navbar/Navbar";
+import { ConnectForm } from "./ui-components/connect-form/ConnectForm";
 
 const SECTIONS = [
   "WARDROBE",
@@ -177,6 +178,7 @@ function App() {
         />
       </div>
       <Consult />
+      <ConnectForm />
     </div>
   );
 }

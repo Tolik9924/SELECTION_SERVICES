@@ -1,4 +1,5 @@
 import { Image } from "../Image/Image";
+import { ConnectForm } from "../connect-form/ConnectForm";
 import img10 from "../../assets/10_img.png";
 
 import styles from "./consult.module.css";
@@ -22,6 +23,9 @@ export const Consult = () => {
         <p className={styles.mobilePhone}>
           ТЕЛЕФОН: <span className={styles.number}>+ 380 68 07 11 707</span>
         </p>
+        <div className={styles.connectContainer}>
+          <ConnectForm />
+        </div>
       </div>
       <Image className={styles.image} src={img10} alt="img10" />
     </div>

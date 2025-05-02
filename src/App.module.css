@@ -4,6 +4,36 @@
     gap: 10px;
 }
 
+.targetSection {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .Img{
     width: 100%;
+}
+
+.connectForm {
+    display: none;
+}
+
+@media (max-width: 1024px) {
+    .connectForm {
+        display: block;
+        margin: 0 auto;
+        width: 100%;
+        background: #a0a0a0;
+        display: flex;
+        justify-content: center;
+        box-sizing: border-box;
+        padding: 30px 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .connectForm {
+        background: #fff;
+        padding: 0;
+    }
 }

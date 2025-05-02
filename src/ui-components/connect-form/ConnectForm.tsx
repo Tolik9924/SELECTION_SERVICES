@@ -46,6 +46,11 @@ export const ConnectForm = () => {
       });
 
       const data = await res.json();
+      setFormData({
+        name: "",
+        phone: "",
+        message: "",
+      });
 
       if (!res.ok) {
         throw new Error(data.description || "Error sending message");
@@ -55,74 +60,70 @@ export const ConnectForm = () => {
     }
   };
 
-  console.log("FORM DATA NAME: ", formData.name.length);
-
   return (
-    <div className={styles.connectContainer}>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <h2 className={styles.title}>Зв'язатися з стилістом</h2>
-        <div className={styles.content}>
-          <div className={styles.formItems}>
-            <div className={styles.formItem}>
-              {/* <label className={styles.label}>Name</label> */}
-              <Input
-                label="Ім'я"
-                variant="primary"
-                size="m"
-                name="name"
-                value={formData.name}
-                handleChange={handleChange}
-                fullWidth
-                required
-              />
-            </div>
-            <div className={styles.formItem}>
-              {/* <label className={styles.label}>Phone</label> */}
-              <Input
-                label="Номер"
-                size="m"
-                name="phone"
-                value={formData.phone}
-                handleChange={handleChange}
-                fullWidth
-                error=""
-                required
-              />
-            </div>
-
-            <div className={styles.formItem}>
-              {/* <label className={styles.label}>Message</label> */}
-              <textarea
-                placeholder="Коментар"
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                rows={4}
-                className={styles.textarea}
-                required
-              ></textarea>
-            </div>
-          </div>
-          <div className={styles.buttonContainer}>
-            <ButtonForm
-              type="submit"
-              size="l"
-              variant="secondary"
-              onclick={handleSubmit}
+    <form onSubmit={handleSubmit} className={styles.form}>
+      <h2 className={styles.title}>Зв'язатися з стилістом</h2>
+      <div className={styles.content}>
+        <div className={styles.formItems}>
+          <div className={styles.formItem}>
+            {/* <label className={styles.label}>Name</label> */}
+            <Input
+              label="Ім'я"
+              variant="primary"
+              size="m"
+              name="name"
+              value={formData.name}
+              handleChange={handleChange}
               fullWidth
-              disabled={
-                !(
-                  formData.message.length > 0 &&
-                  formData.name.length > 0 &&
-                  formData.phone.length > 0
-                )
-              }
-            >
-              НАДІСЛАТИ
-            </ButtonForm>
+              required
+            />
+          </div>
+          <div className={styles.formItem}>
+            {/* <label className={styles.label}>Phone</label> */}
+            <Input
+              label="Номер"
+              size="m"
+              name="phone"
+              value={formData.phone}
+              handleChange={handleChange}
+              fullWidth
+              error=""
+              required
+            />
+          </div>
+
+          <div className={styles.formItem}>
+            {/* <label className={styles.label}>Message</label> */}
+            <textarea
+              placeholder="Коментар"
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              rows={4}
+              className={styles.textarea}
+              required
+            ></textarea>
           </div>
         </div>
-      </form>
-    </div>
+        <div className={styles.buttonContainer}>
+          <ButtonForm
+            type="submit"
+            size="l"
+            variant="secondary"
+            onclick={handleSubmit}
+            fullWidth
+            disabled={
+              !(
+                formData.message.length > 0 &&
+                formData.name.length > 0 &&
+                formData.phone.length > 0
+              )
+            }
+          >
+            НАДІСЛАТИ
+          </ButtonForm>
+        </div>
+      </div>
+    </form>
   );
 };

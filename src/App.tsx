@@ -178,7 +178,9 @@ function App() {
         />
       </div>
       <Consult />
-      <ConnectForm />
+      <div className={styles.connectForm}>
+        <ConnectForm />
+      </div>
     </div>
   );
 }

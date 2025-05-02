@@ -3,22 +3,18 @@ import { Input } from "../Input/Input";
 
 import styles from "./connectForm.module.css";
 import { ButtonForm } from "../ButtonForm/ButtonForm";
+import {
+  NAME_ERROR_MESSAGE,
+  PHONE_ERROR_MESSAGE,
+} from "./constants/error-messages";
+import { CHAT_ID, URL_TG } from "./constants/telegram-data";
+import { NAME_REG, PHONE_REG } from "./constants/regs";
 
 interface FormData {
   name: string;
   phone: string;
   message: string;
 }
-
-const PHONE_ERROR_MESSAGE = "Номер має містити 10 чисел.";
-const NAME_ERROR_MESSAGE = "Ім'я має містити більше трьох літерів.";
-
-const CHAT_ID = 385330221;
-const BOT_TOKEN = "5562222512:AAHwhCRMXgpzP0AVNTPWK9U2ZhOUWznlB1U";
-const URL = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-
-const PHONE_REG = /^[0-9]{10}$/;
-const NAME_REG = /^[A-Za-zА-Яа-яЁёІіЇїЄєҐґ ]{2,}$/;
 
 export const ConnectForm = () => {
   const [formData, setFormData] = useState<FormData>({
@@ -72,7 +68,7 @@ export const ConnectForm = () => {
     const text = `New Form Submission:\nName: ${formData.name}\nPhone: ${formData.phone}\nMessage: ${formData.message}`;
 
     try {
-      const res = await fetch(URL, {
+      const res = await fetch(URL_TG, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -98,8 +94,6 @@ export const ConnectForm = () => {
     }
   };
 
-  console.log("ERROR FORM: ", errorForm);
-
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
       <h2 className={styles.title}>Зв'язатися з стилістом</h2>
@@ -119,10 +113,10 @@ export const ConnectForm = () => {
             />
           </div>
           <div className={styles.formItem}>
-            <label className={styles.label}>+38</label>
+            {/* <label className={styles.label}>+38</label> */}
             <Input
               type="number"
-              label="0683247425"
+              label="+38"
               size="m"
               name="phone"
               value={formData.phone}

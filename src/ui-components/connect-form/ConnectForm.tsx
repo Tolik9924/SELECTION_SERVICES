@@ -2,6 +2,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { Input } from "../Input/Input";
 
 import styles from "./connectForm.module.css";
+import { ButtonForm } from "../ButtonForm/ButtonForm";
 
 interface FormData {
   name: string;
@@ -23,21 +24,49 @@ export const ConnectForm = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    // Add API call or other submission logic here
+
+    const botToken = "5562222512:AAHwhCRMXgpzP0AVNTPWK9U2ZhOUWznlB1U";
+    const chatId = 385330221;
+    const text = `New Form Submission:\nName: ${formData.name}\nMessage: ${formData.message}\nPhone: ${formData.phone}`;
+
+    const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: text,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.description || "Error sending message");
+      }
+    } catch (error) {
+      console.error("Telegram API error:", error);
+    }
   };
+
+  console.log("FORM DATA NAME: ", formData.name.length);
 
   return (
     <div className={styles.connectContainer}>
       <form onSubmit={handleSubmit} className={styles.form}>
-        <h2 className="text-2xl font-bold">Contact Us</h2>
+        <h2 className={styles.title}>Зв'язатися з стилістом</h2>
         <div className={styles.content}>
           <div className={styles.formItems}>
             <div className={styles.formItem}>
-              <label className={styles.label}>Name</label>
+              {/* <label className={styles.label}>Name</label> */}
               <Input
+                label="Ім'я"
                 variant="primary"
                 size="m"
                 name="name"
@@ -48,37 +77,49 @@ export const ConnectForm = () => {
               />
             </div>
             <div className={styles.formItem}>
-              <label className={styles.label}>Phone</label>
+              {/* <label className={styles.label}>Phone</label> */}
               <Input
+                label="Номер"
                 size="m"
-                type="phone"
                 name="phone"
                 value={formData.phone}
                 handleChange={handleChange}
                 fullWidth
+                error=""
                 required
               />
             </div>
 
             <div className={styles.formItem}>
-              <label className={styles.label}>Message</label>
+              {/* <label className={styles.label}>Message</label> */}
               <textarea
+                placeholder="Коментар"
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
                 rows={4}
-                className="w-full border rounded-lg px-3 py-2"
+                className={styles.textarea}
                 required
               ></textarea>
             </div>
           </div>
           <div className={styles.buttonContainer}>
-            <button
+            <ButtonForm
               type="submit"
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+              size="l"
+              variant="secondary"
+              onclick={handleSubmit}
+              fullWidth
+              disabled={
+                !(
+                  formData.message.length > 0 &&
+                  formData.name.length > 0 &&
+                  formData.phone.length > 0
+                )
+              }
             >
-              Send
-            </button>
+              НАДІСЛАТИ
+            </ButtonForm>
           </div>
         </div>
       </form>

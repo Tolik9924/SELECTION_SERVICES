@@ -23,6 +23,7 @@ export type Props = {
   elementType?: "input";
   type?: string;
   required?: boolean;
+  pattern?: string;
 };
 
 export const Input = ({
@@ -39,6 +40,7 @@ export const Input = ({
   name,
   type,
   required,
+  pattern,
   ...rest
 }: Props) => {
   return (
@@ -64,6 +66,7 @@ export const Input = ({
         value={value}
         name={name}
         required={required}
+        pattern={pattern}
         {...rest}
       />
       {error && (

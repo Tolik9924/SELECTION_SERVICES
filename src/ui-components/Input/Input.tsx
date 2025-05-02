@@ -34,7 +34,7 @@ export const Input = ({
   size = "m",
   fullWidth = false,
   variant = "primary",
-  error,
+  error = "",
   handleChange,
   value,
   name,

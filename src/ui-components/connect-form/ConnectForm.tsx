@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Input } from "../Input/Input";
 
 import styles from "./connectForm.module.css";
@@ -10,12 +10,54 @@ interface FormData {
   message: string;
 }
 
+const PHONE_ERROR_MESSAGE = "Номер має містити 10 чисел.";
+const NAME_ERROR_MESSAGE = "Ім'я має містити більше трьох літерів.";
+
+const CHAT_ID = 385330221;
+const BOT_TOKEN = "5562222512:AAHwhCRMXgpzP0AVNTPWK9U2ZhOUWznlB1U";
+const URL = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+
+const PHONE_REG = /^[0-9]{10}$/;
+const NAME_REG = /^[A-Za-zА-Яа-яЁёІіЇїЄєҐґ ]{2,}$/;
+
 export const ConnectForm = () => {
   const [formData, setFormData] = useState<FormData>({
     name: "",
     phone: "",
     message: "",
   });
+
+  const [errorForm, setErrorForm] = useState({
+    name: "",
+    phone: "",
+  });
+
+  const validateField = (field: string, regex: RegExp) => {
+    return regex.test(field);
+  };
+
+  const disabledButton = !(
+    validateField(formData.name, NAME_REG) &&
+    validateField(formData.phone, PHONE_REG)
+  );
+
+  useEffect(() => {
+    const newErrors = { ...errorForm };
+
+    if (formData.name && !validateField(formData.name, NAME_REG)) {
+      newErrors.name = NAME_ERROR_MESSAGE;
+    } else {
+      newErrors.name = "";
+    }
+
+    if (formData.phone && !validateField(formData.phone, PHONE_REG)) {
+      newErrors.phone = PHONE_ERROR_MESSAGE;
+    } else {
+      newErrors.phone = "";
+    }
+
+    setErrorForm(newErrors);
+  }, [formData.name, formData.phone]);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -27,20 +69,16 @@ export const ConnectForm = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    const botToken = "5562222512:AAHwhCRMXgpzP0AVNTPWK9U2ZhOUWznlB1U";
-    const chatId = 385330221;
-    const text = `New Form Submission:\nName: ${formData.name}\nMessage: ${formData.message}\nPhone: ${formData.phone}`;
-
-    const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+    const text = `New Form Submission:\nName: ${formData.name}\nPhone: ${formData.phone}\nMessage: ${formData.message}`;
 
     try {
-      const res = await fetch(url, {
+      const res = await fetch(URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          chat_id: chatId,
+          chat_id: CHAT_ID,
           text: text,
         }),
       });
@@ -60,13 +98,14 @@ export const ConnectForm = () => {
     }
   };
 
+  console.log("ERROR FORM: ", errorForm);
+
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
       <h2 className={styles.title}>Зв'язатися з стилістом</h2>
       <div className={styles.content}>
         <div className={styles.formItems}>
           <div className={styles.formItem}>
-            {/* <label className={styles.label}>Name</label> */}
             <Input
               label="Ім'я"
               variant="primary"
@@ -75,32 +114,33 @@ export const ConnectForm = () => {
               value={formData.name}
               handleChange={handleChange}
               fullWidth
+              error={errorForm.name}
               required
             />
           </div>
           <div className={styles.formItem}>
-            {/* <label className={styles.label}>Phone</label> */}
+            <label className={styles.label}>+38</label>
             <Input
-              label="Номер"
+              type="number"
+              label="0683247425"
               size="m"
               name="phone"
               value={formData.phone}
               handleChange={handleChange}
               fullWidth
-              error=""
+              error={errorForm.phone}
               required
             />
           </div>
 
           <div className={styles.formItem}>
-            {/* <label className={styles.label}>Message</label> */}
             <textarea
+              className={styles.textarea}
               placeholder="Коментар"
               name="message"
               value={formData.message}
               onChange={handleChange}
               rows={4}
-              className={styles.textarea}
               required
             ></textarea>
           </div>
@@ -112,13 +152,7 @@ export const ConnectForm = () => {
             variant="secondary"
             onclick={handleSubmit}
             fullWidth
-            disabled={
-              !(
-                formData.message.length > 0 &&
-                formData.name.length > 0 &&
-                formData.phone.length > 0
-              )
-            }
+            disabled={disabledButton}
           >
             НАДІСЛАТИ
           </ButtonForm>

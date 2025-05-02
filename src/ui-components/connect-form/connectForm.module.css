@@ -42,11 +42,13 @@
   width: 100%;
   gap: 15px;
   align-items: center;
+  color: #000;
 }
 
 .label {
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 600;
+  color: #000;
 }
 
 .textarea {
@@ -58,6 +60,8 @@
   box-sizing: border-box;
   border-radius: 4px;
   transition: border-color 0.2s;
+  height: 120px;
+  resize: none;
 
   &::placeholder {
     color: var(--grey);

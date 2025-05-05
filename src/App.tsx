@@ -96,7 +96,7 @@ function App() {
           }
         });
       },
-      { threshold: 1 }
+      { threshold: 0.5 }
     );
 
     SECTIONS.forEach((id: string) => {

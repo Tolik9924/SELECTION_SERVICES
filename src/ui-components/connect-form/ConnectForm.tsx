@@ -9,6 +9,8 @@ import {
 } from "./constants/error-messages";
 import { CHAT_ID, URL_TG } from "./constants/telegram-data";
 import { NAME_REG, PHONE_REG } from "./constants/regs";
+import { classes } from "../../shared/utils";
+import { FAIL, SUCCESS } from "./constants/check-send";
 
 interface FormData {
   name: string;
@@ -28,13 +30,19 @@ export const ConnectForm = () => {
     phone: "",
   });
 
+  const [message, setMessage] = useState({
+    success: false,
+    message: "",
+  });
+
   const validateField = (field: string, regex: RegExp) => {
     return regex.test(field);
   };
 
   const disabledButton = !(
     validateField(formData.name, NAME_REG) &&
-    validateField(formData.phone, PHONE_REG)
+    validateField(formData.phone, PHONE_REG) &&
+    message.message === ""
   );
 
   useEffect(() => {
@@ -62,6 +70,20 @@ export const ConnectForm = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const checkMessageSend = (message: string, success: boolean) => {
+    setMessage({
+      message: message,
+      success: success,
+    });
+
+    setTimeout(() => {
+      setMessage({
+        message: "",
+        success: success,
+      });
+    }, 3000);
+  };
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
@@ -86,11 +108,15 @@ export const ConnectForm = () => {
         message: "",
       });
 
+      checkMessageSend(SUCCESS, true);
+
       if (!res.ok) {
+        checkMessageSend(FAIL, false);
         throw new Error(data.description || "Error sending message");
       }
     } catch (error) {
       console.error("Telegram API error:", error);
+      checkMessageSend(FAIL, false);
     }
   };
 
@@ -113,7 +139,6 @@ export const ConnectForm = () => {
             />
           </div>
           <div className={styles.formItem}>
-            {/* <label className={styles.label}>+38</label> */}
             <Input
               type="number"
               label="+38"
@@ -140,6 +165,15 @@ export const ConnectForm = () => {
           </div>
         </div>
         <div className={styles.buttonContainer}>
+          {message.message !== "" && (
+            <span
+              className={classes(styles.message, {
+                [styles.success]: message.success,
+              })}
+            >
+              {message.message}
+            </span>
+          )}
           <ButtonForm
             type="submit"
             size="l"

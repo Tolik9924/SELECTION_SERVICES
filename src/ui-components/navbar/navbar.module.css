@@ -48,7 +48,7 @@
   align-items: center;
   padding: 10px;
   box-sizing: border-box;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   transition: all 0.3s ease-in-out;
   border-top: 5px solid #d9d9d9;
@@ -57,12 +57,14 @@
 
 .linkActive {
   border-bottom: 5px solid #fff;
+  flex-shrink: 0;
 }
 
 .link:hover {
   background: #e3e3e3;
   border-top: 5px solid #e3e3e3;
   border-bottom: 5px solid #e9e9e9;
+  flex-shrink: 0;
 }
 
 

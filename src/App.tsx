@@ -48,13 +48,22 @@ import { ServiceGive } from "./ui-components/service-give/ServiceGive";
 import { Consult } from "./ui-components/consult/Consult";
 import { Navbar } from "./ui-components/navbar/Navbar";
 import { ConnectForm } from "./ui-components/connect-form/ConnectForm";
+import {
+  LINES,
+  WARDROBE,
+  SHOPPING,
+  CAPSULE_WARDROBE,
+  KEY_WARDROBE,
+  CONSULT,
+} from "./shared/services/constants/services";
 
 const SECTIONS = [
-  "WARDROBE",
-  "LINES",
-  "SHOPPING",
-  "CAPSULE_WARDROBE",
-  "KEY_WARDROBE",
+  WARDROBE,
+  LINES,
+  SHOPPING,
+  CAPSULE_WARDROBE,
+  KEY_WARDROBE,
+  CONSULT,
 ];
 
 function App() {
@@ -108,6 +117,8 @@ function App() {
     return () => observer.disconnect();
   }, []);
 
+  console.log("SECTIONS: ", SECTIONS);
+
   return (
     <div className={styles.App}>
       {!firstShowing && <Navbar isShow={showNavbar} activeId={activeSection} />}
@@ -117,7 +128,7 @@ function App() {
       <ServiceGive />
       <div className={styles.targetSection} ref={sectionRef}>
         <ServiceType
-          id="WARDROBE"
+          id={WARDROBE}
           img={img5}
           title={WARDROBE_TITLE}
           prices={WARDROBE_BREAKDOWN_PRICES}
@@ -125,11 +136,11 @@ function App() {
           happenList={WARDROBE_HAPPEN_LIST}
           getList={WARDROBE_GET_LIST}
           ref={(el) => {
-            sectionRefs.current["WARDROBE"] = el;
+            sectionRefs.current[WARDROBE] = el;
           }}
         />
         <ServiceType
-          id="LINES"
+          id={LINES}
           img={img6}
           title={BEAUTY_TITLE}
           prices={BEAUTY_LINE_PRICES}
@@ -137,11 +148,11 @@ function App() {
           happenList={BEAUTY_LINE_HAPPEN_LIST}
           getList={WARDROBE_GET_LIST}
           ref={(el) => {
-            sectionRefs.current["LINES"] = el;
+            sectionRefs.current[LINES] = el;
           }}
         />
         <ServiceType
-          id="SHOPPING"
+          id={SHOPPING}
           img={img7}
           title={SHOPPING_TITLE}
           prices={SHOPPING_LINE_PRICES}
@@ -149,11 +160,11 @@ function App() {
           happenList={SHOPPING_HAPPEN_LIST}
           getList={SHOPPING_GET_LIST}
           ref={(el) => {
-            sectionRefs.current["SHOPPING"] = el;
+            sectionRefs.current[SHOPPING] = el;
           }}
         />
         <ServiceType
-          id="CAPSULE_WARDROBE"
+          id={CAPSULE_WARDROBE}
           img={img8}
           title={CAPSULE_WARDROBE_TITLE}
           prices={CAPSULE_WARDROBE_PRICES}
@@ -161,11 +172,11 @@ function App() {
           happenList={CAPSULE_WARDROBE_HAPPEN_LIST}
           getList={CAPSULE_WARDROBE_GET_LIST}
           ref={(el) => {
-            sectionRefs.current["CAPSULE_WARDROBE"] = el;
+            sectionRefs.current[CAPSULE_WARDROBE] = el;
           }}
         />
         <ServiceType
-          id="KEY_WARDROBE"
+          id={KEY_WARDROBE}
           img={img9}
           title={KEY_WARDROBE_TITLE}
           prices={KEY_WARDROBE_PRICES}
@@ -173,13 +184,20 @@ function App() {
           happenList={KEY_WARDROBE_HAPPEN_LIST}
           getList={KEY_WARDROBE_GET_LIST}
           ref={(el) => {
-            sectionRefs.current["KEY_WARDROBE"] = el;
+            sectionRefs.current[KEY_WARDROBE] = el;
           }}
         />
-      </div>
-      <Consult />
-      <div className={styles.connectForm}>
-        <ConnectForm />
+        <div
+          id={CONSULT}
+          ref={(el) => {
+            sectionRefs.current[CONSULT] = el;
+          }}
+        >
+          <Consult />
+          <div className={styles.connectForm}>
+            <ConnectForm />
+          </div>
+        </div>
       </div>
     </div>
   );

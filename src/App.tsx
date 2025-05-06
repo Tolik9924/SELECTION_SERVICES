@@ -105,7 +105,7 @@ function App() {
           }
         });
       },
-      { threshold: 0.5 }
+      { threshold: 0.45 }
     );
 
     SECTIONS.forEach((id: string) => {

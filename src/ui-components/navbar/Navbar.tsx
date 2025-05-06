@@ -77,6 +77,8 @@ export const Navbar = ({
     setNavbarItems(result);
   };
 
+  console.log("NAVBARS ITEMS: ", navbarItems);
+
   return (
     <nav
       className={classes(styles.navbar, {
